@@ -1,0 +1,13 @@
+<html>
+  <head>
+  <title>frame的应用</title>
+  </head>
+
+  <frameset rows="95,*"> <!--剩余部分用*-->
+	<frame src="header.html">
+	<frameset cols="30%,*">
+		<frame src="left.html">
+		<frame src="right.html" >
+	</frameset>
+  </frameset>
+</html>

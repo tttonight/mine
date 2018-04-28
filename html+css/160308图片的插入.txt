@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>图片的插入</title>
+    </head>
+    <body>
+    <img src="img/aa.jpg/"><!--注意相对路径和绝对路径，相对路径，就是在同一个网站下，不同文件之间的的位置定位。-->
+                           <!--在写了该txt的文件夹中的img 文件夹里面的图片-->
+                          <!--绝对路径就是完整的路径,如（img src="c:/BookTest/images/海贼王.jpg" alt="海贼王"/）-->
+    </body>
+</html>
