@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>自动播放--幻灯片</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css" media="all"/>
+    <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style type="text/css">
+    #box {width:650px; border:5px solid #fdd; margin:20px auto; }
+    ul {list-style:none;margin:0;padding:0;}
+    .count {position:absolute;margin-top:-30px;margin-left:420px;}
+    .count li {float:left;margin-left:20px; border-radius:25px;width:20px;text-align:center;background-color:#fcc;}
+    .list li{display:none;}
+    .list .current {display:block;}
+    .count .current {background-color:#EC6A5C;}
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul class="list">
+        <li class="current"><img src="../images/bigimg/1.jpg" width="640" height="400" /></li>
+        <li><img src="../images/bigimg/2.jpg" width="640" height="400" /></li>
+        <li><img src="../images/bigimg/3.jpg" width="640" height="400" /></li>
+        <li><img src="../images/bigimg/4.jpg" width="640" height="400" /></li>
+        <li><img src="../images/bigimg/5.jpg" width="640" height="400" /></li>
+    </ul>
+    <ul class="count">
+        <li class="current">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+<script>
+(function() {
+    var oBox = document.getElementById("box");
+    var oList = oBox.getElementsByClassName("list")[0];
+    var oListLi = oList.getElementsByTagName("li");
+    var oCount = oBox.getElementsByClassName("count")[0];
+    var oCountLi = oCount.getElementsByTagName("li");
+    var timer = null,
+        opacity = null,
+        img = 0;
+    //移动到相应的数字显示相应的图片
+    for(var i=0; i<oCountLi.length; i++) {
+        oCountLi[i].index = i;
+        oCountLi[i].onmouseover = function() {
+            show(oListLi, this.index);
+        }
+        oCountLi[i].onmouseout = function() {
+            clearInterval(opacity);
+        }
+    }
+    /*
+    * 鼠标移入box
+    */
+    oBox.onmouseover = function() {
+        clearInterval(timer);
+    }
+    /*
+    * 鼠标移出box
+    */
+    oBox.onmouseout = function() {
+        autoplay();
+    }
+    /*
+    * 自动播放
+    */
+    function autoplay() {
+        //console.log("autoplay");
+        timer = setInterval(function() {  
+            //console.log("autoplay-setInterval");        
+            img++;
+            show(oListLi, img%5);
+        },2000);
+    }
+    autoplay();
+    /*
+    * 显示图片,图片淡入淡出
+    */
+    function show(obj, imgnum) {
+        //下面的数字变化
+        for(var i=0; i<oCountLi.length; i++) {
+            oCountLi[i].className = "";
+        }
+        oCountLi[imgnum].className = "current";
+        //图片变化
+        for(var i=0; i<oListLi.length; i++) {
+            obj[i].className = "";
+        }
+        obj[imgnum].className = "current";
+        //图片淡入
+        obj[imgnum].style.opacity = 0;
+        var speed = 2, alpha = 0;
+        opacity = setInterval(function() { 
+            alpha += speed;
+            //注意要加这句，如果alpha大于100，让它等于100，停止定时器，否则会出现闪烁
+            alpha > 100 && (alpha =100);
+             obj[imgnum].style.opacity = alpha/100;
+             //当其等于100，停止定时器
+            alpha == 100 && clearInterval(opacity)           
+        },20);
+        
+    }
+}());
+</script>
+    <script src="../jquery/js/jquery-1.11.3.min.js"></script>
+    <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

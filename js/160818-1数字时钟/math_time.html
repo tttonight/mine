@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>数字时钟</title>
+  <script>
+	//功能：时间需要要两位数
+	function toDou(n) {
+		if(n<10) {
+			return '0'+n;
+		}else {
+			//前面加空字符串，将其变为字符串，否则依旧为数字
+			return ''+n;
+		}
+	}
+	window.onload = function() {
+		var aImg = document.getElementsByTagName('img');
+		tick = function() {
+			var oDate = new Date();
+			var str = toDou(oDate.getHours()) + toDou(oDate.getMinutes()) + toDou(oDate.getSeconds());
+
+			for(var i=0; i<aImg.length; i++) {
+				//在ie7等低版本的不能用
+				//aImg[i].src='img/'+str[i]+'.png';
+				aImg[i].src='img/'+str.charAt(i)+'.png';
+			}
+		};
+		//进行刷新,1000表示1s
+		setInterval(tick, 1000);
+		//setInterval是会1s后才开始执行的，所以一开始会出现 00:00:00，所以要先一开始就执行一遍tick才会完美
+		tick();
+	};
+  </script>
+ </head>
+ <body style="background:black; color:white; font-size:50px">
+  <img src="img/0.png">
+  <img src="img/0.png">
+  :
+  <img src="img/0.png">
+  <img src="img/0.png">
+  :
+  <img src="img/0.png">
+  <img src="img/0.png">
+
+ </body>
+</html>

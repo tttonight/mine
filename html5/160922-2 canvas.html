@@ -1,0 +1,43 @@
+﻿<!doctype html>
+<html>
+ <head>
+  <style>
+  </style>
+ </head>
+ <body>
+	<canvas width="500" height="500" style="background:#ABCDEF" id="canvas">
+		您的浏览器当前版本不支持canvas标签
+	</canvas>
+	<script>
+		//获取画布DOM
+		var canvas = document.getElementById("canvas");
+		//alert(canvas);
+		//设置绘图环境,表示要新建一个2d的绘图环境
+		var cxt = canvas.getContext('2d');
+		//alert(cxt);
+		/**画一条线段:4步*/
+			//设定画笔的样式
+			cxt.lineWidth=10;//宽度
+			cxt.strokeStyle="red";
+		//1、开始位置的坐标
+		cxt.moveTo(20,20);
+		//2、设置移动的位置
+		cxt.lineTo(100,20);
+		//3、画线
+		cxt.stroke();
+		//4、封闭路径
+		cxt.closePath();
+		/**画圆形:注意：凡是路径图形，一定要封闭路径和开始路径*/
+		//1、开始路径
+		cxt.beginPath();
+		//2、设置位置等
+		cxt.arc(200,200,50,0,360,false);//圆心：200,200；半径：50；第四五个参数是角度,第6个参数是正向还是方向画
+		//3、画圆
+		cxt.stroke();
+		//4、关闭路径
+		/**
+		矩形：rect
+		*/
+	</script>
+ </body>
+</html>

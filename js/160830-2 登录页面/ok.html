@@ -1,0 +1,28 @@
+<head>
+ <meta charset="utf-8">
+ <script>
+	//*** 错误：不能这样写,两种方法
+	//setTimeout("manage.html", 3000);
+	/* ① */
+	//setTimeout("javascript:window.open('manage.html')", 3000);
+	/* ② */
+	setTimeout(function() {
+		clearInterval(timer);
+		window.open('manage.html',"_self");
+	}, 3000);
+	var n=3;
+	function change() {
+		var myspan=document.getElementById("myspan");
+		//也可以直接用innerText去-1
+		//myspan.innerText=myspan.innerText-1;
+		myspan.innerText=--n;
+		/*即使上面用的是_self,也要关了定时器，可在setTimeout里面关*/
+		// if(n==0) {
+			// clearInterval(timer);
+		// }
+	}
+	var timer = setInterval("change()", 1000);
+ </script>
+</head>
+登录成功！
+<span id="myspan">3</span>秒后跳转！

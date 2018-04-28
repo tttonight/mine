@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>星级打分</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css" media="all"/>
+    <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style type="text/css">
+    #star li {list-style:none; float:left; margin-left:10px; background-color:#fdd; border-radius:25px;width:20px; cursor:pointer; text-indent:-9999px;}
+    #star li div {position:absolute;text-indent:0px; width:200px;height:60px; border:1px solid #f9c; margin:10px;}
+    #star li div em {color:#f60;display:block;font-style:normal;}
+    #star li.current {background-color:#f5c;}
+    </style>
+</head>
+<body>
+<div id="star">
+    <span>点击星星就能打分</span>
+    <ul>
+        <li><a href="javascript:;">1</a></li>
+        <li><a href="javascript:;">2</a></li>
+        <li><a href="javascript:;">3</a></li>
+        <li><a href="javascript:;">4</a></li>
+        <li><a href="javascript:;">5</a></li>
+    </ul>
+    <span></span>
+    <p></p>
+</div>
+<!-- <div><em><b>1分 很不满意</b></em>
+        差得太离谱，与描述的完全不符</div> -->
+<script>
+(function() {
+    var oDiv = document.getElementById("star");
+    var oUl = oDiv.getElementsByTagName("ul")[0];
+    var oLi = oUl.getElementsByTagName("li");
+    var p = oDiv.getElementsByTagName("p")[0]; //显示点击后的信息
+    var oInfo = [
+        "很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+        "不满意|部分有破损，与卖家描述的不符，不满意",
+        "一般|质量一般，没有卖家描述的那么好",
+        "满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+        "非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+        ];
+    var aDiv = null;
+    /**
+    * 显示星级提示框
+    */
+    var show = function(obj, i) {
+        
+        //用display来隐藏
+        aDiv =  aDiv || document.createElement("div");
+        //aDiv.className = "show";
+        aDiv.innerHTML = "<em><b>"+ i +"分  "+ oInfo[i].split("|")[0] + "</b></em>" + oInfo[i].split("|")[1];
+        aDiv.style.display = "block"
+        obj.appendChild(aDiv);
+        
+    }
+    for(var i=0; i<oLi.length; i++) {
+        oLi[i].index = i;
+        /**
+        * 鼠标移动到li时
+        */
+        oLi[i].onmouseover = function() {
+            show(this, this.index);
+            //将所有的li置为原来的颜色
+            for(var k=0; k<oLi.length; k++) {
+                oLi[k].className = "";
+            }
+            //this.index鼠标移动到某个星星后面的也要跟着变色
+            for(var k=0; k<=this.index; k++) {
+                oLi[k].className="current";
+            }
+            
+        }
+        /**
+        * 鼠标离开星星时
+        *   注意：当点击星星时，离开星星也会执行这个函数，所以要区分是点击还是移动
+        */
+        oLi[i].onmouseout = function() {
+            //this.removeChild(aDiv);
+            aDiv.style.display = "none";
+            if(!(/click/gi).test(this.className)) {
+                for(var k=0; k<=this.index; k++) {
+                    oLi[k].className="";
+                }
+            }
+            
+        }
+        /**
+        * 鼠标点击星星时，颜色固定，p显示内容
+        */
+        oLi[i].onclick = function() {
+            for(var k=0; k<=this.index; k++) {
+                oLi[k].className = "current click";
+            }
+            p.innerHTML = oInfo[this.index].split("|")[1];
+        }
+    }
+}());
+</script>
+    <script src="../jquery/js/jquery-1.11.3.min.js"></script>
+    <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title></title>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<style>
+</style>
+</head>
+<body>
+<div id="div1" style="border:1px dashed #E6E6E6;margin:100px 0px 0px 150px;">
+<table width="285" height="169" border="0" align="left" cellpadding="0">
+<tr>
+ <td width="126">
+	<select name="first" size="10" multiple="multiple">
+		<option value="1">111</option>
+		<option value="2">222</option>
+		<option value="3">333</option>
+		<option value="4">444</option>
+		<option value="5">555</option>
+		<option value="6">666</option>
+		<option value="7">777</option>
+		<option value="8">888</option>
+	</select>
+ </td>
+ <td width="69" valign="middle">
+	<input id="add" type="button" value="-->" id="btn">
+	<input id="remove" type="button" value="<--" id="btn">
+	<input id="add_all" type="button" value="==>" id="btn">
+	<input id="remove_all" type="button" value="<==" id="btn">
+ </td>
+ <td>
+	<select name="second" size="10" multiple="multiple">
+		<option value="9">999</option>
+	</select>
+ </td>
+
+</tr>
+</table>
+<script>
+/**
+注意点：
+1、可以用表格来做
+2、select 中如果要可以多选几个选项，加属性：multiple="multiple"
+3、$(document).ready()是页面载入，是所有的dom对象都创建ok后，再调用，
+因此我们如果把处理代码写入到ready事件中是比较安全的
+注意：ready里面是写函数的
+4、双击处理
+*/
+ $(document).ready(
+	function() {
+		$("#add").click(function() {
+			//注意：不能直接写select，这样两边的select相同，需要用name区分他们
+			$("select[name='first'] option:selected").appendTo($("select[name='second']"));
+		});
+		/**==>向右移动全部*/
+		$("#add_all").click(function() {
+			$("select[name='first'] option").appendTo($("select[name='second']"));
+		});
+		
+		$("#remove").click(function() {
+			$("select[name='second'] option:selected").appendTo($("select[name='first']"));
+		});
+		
+		$("#remove_all").click(function() {
+			$("select[name='second'] option").appendTo($("select[name='first']"));
+		});
+		
+		//双击处理
+		$("select[name='first']").dblclick(function(){
+				$("select[name='first'] option:selected").appendTo("select[name='second']");
+		});
+		$("select[name='second']").dblclick(function(){
+				$("select[name='second'] option:selected").appendTo("select[name='first']");
+		});
+		
+	}
+ );
+</script>
+</body>
+</html>

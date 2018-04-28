@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="./extjs/resources/bootstrap.js"></script>
+    <link href="./extjs/resources/css/ext-all.css" 
+	rel="stylesheet" type="text/css"/>
+	<script src="./Admin/extjs/locale/ext-lang-zh_CN.js"></script>
+	
+	
+ <!--    @RenderSection("script", false) -->
+</head>
+<body>
+    @section script{
+    <script type="text/javascript">
+        function init() {
+            Ext.MessageBox.alert("ExtJS", "Hello ExtJS");
+        }
+        Ext.onReady(init);
+    </script>
+}
+<!--
+说明：
+(1)Ext.onReady():ExtJS Application的入口...就相当于Java或C#的main函数.
+(2)Ext.MessageBox.alert()：弹出对话框。
+-->
+</body>
+</html>

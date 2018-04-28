@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>延时提示框</title>
+  <style>
+  div {float:left; margin:10px}
+	#div1 {background:red; width:30px; height:30px}
+	#div2 {background:#CCC; width:200px; height:150px; display:none}
+  </style>
+  <script>
+	window.onload = function() {
+		var oDiv1 = document.getElementById('div1');
+		var oDiv2 = document.getElementById('div2');
+		var timer = null;
+		//鼠标移入红色区域
+		oDiv1.onmouseover = function() {
+			//因为从灰色移回红色，它的setTimeout还没关闭，所以灰色一样会在500mm之后消失,所以需要clear它
+			clearTimeout(timer);
+			oDiv2.style.display = 'block';
+		};
+		//鼠标移出红色区域
+		oDiv1.onmouseout = function() {
+			timer = setTimeout(function() {
+				oDiv2.style.display = 'none';
+			}, 500);
+		};
+		//鼠标移入灰色区域
+		oDiv2.onmouseover = function() {
+			clearTimeout(timer);
+		};
+		
+		oDiv2.onmouseout = function() {
+			timer = setTimeout(function() {
+				oDiv2.style.display = 'none';
+			}, 500);
+		};
+		
+		//可以将相同的合并起来
+	};
+  </script>
+ </head>
+ <body>
+	<div id="div1"></div>
+	<div id="div2"></div>
+ </body>
+</html>

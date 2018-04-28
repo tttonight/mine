@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>登录框--没点击时有文字，点击了没有文字，可输入</title>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<style>
+</style>
+</head>
+<body>
+<form >
+<!--value是默认值，可以通过this.defaultValue来访问-->
+ 账号：<input type="text" name="username" value="用户邮箱/手机号/用户名"><br>
+ 密码：<input type="password"><br>
+ <input type="button" value="登录" onclick='(function() {
+ alert("111");})()'/>
+</form>
+<script>
+/**
+注意：
+1、要用什么事件：foucus和blur
+*/
+$(document).ready(function() {
+	/***************
+	注意：用focus事件，
+	用mousedown点击一次是会没有文字，但是不能在text中输入文字
+	****************/
+	$("input[name='username']").focus(function() {
+		//获取当前值
+		$curVal=$(this).val();
+		if($curVal==this.defaultValue){
+			$(this).val("");
+		}else{
+			$(this).val($curVal);
+		}
+	});
+	//再绑定事件：鼠标移开blur
+	$("input[name='username']").blur(function() {
+		//获取当前值
+		$curVal=$(this).val();
+		if($curVal==""){
+			$(this).val(this.defaultValue);
+		}else{
+			$(this).val($curVal);
+		}
+	});
+	
+	
+}
+);
+</script>
+</body>
+</html>

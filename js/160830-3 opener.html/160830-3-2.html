@@ -1,0 +1,20 @@
+<head>
+<meta charset="utf-8">
+</head>
+<script>
+/**
+* 子窗口 到 父窗口
+*/
+function notify() {
+	//*** 错误：不能这样，myspan没有定义
+	//*** opener.document.getElementById("info").value = myspan.value;
+	var val = document.getElementById("info").value
+	// window.alert(val);
+	
+	//opener 相当于1窗口
+	opener.document.getElementById("myspan").innerText=val;
+}
+</script>
+窗口2 <br>
+消息:<input type="text" id="info"/><br>
+<input type="button" value="通知给父窗口" onclick="notify()">

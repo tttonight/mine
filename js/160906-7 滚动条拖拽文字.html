@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> 滚动条拖拽 </title>
+  <style>
+  #parent {width:600px;height:20px;background:#CCC;position:relative;margin:10px auto; }
+  #div1 {width:20px;height:20px;background:red;position:absolute;}
+  #div2 {width:400px;height:300px;border:1px solid black;position:absolute;}
+  #div3 {position:absolute;left:0;top:0;padding:4px;}
+  </style>
+  <script>
+  window.onload=function() {
+	  var oDiv = document.getElementById("div1");
+	  var oDiv2 = document.getElementById("div2");
+	  var oDiv3 = document.getElementById("div3");
+	  var oParent = document.getElementById("parent");
+	  
+	  var disX=0;
+	  
+	  oDiv.onmousedown = function(ev) {
+		  var oEvent=ev||event;
+		  
+		  disX=oEvent.clientX-oDiv.offsetLeft;
+		  
+		  
+		  document.onmousemove=function(ev) {
+			  var oEvent=ev||event;
+			  
+			  l=oEvent.clientX-disX;
+			  
+			  
+			  //控制div不跑出可视区范围
+			  if(l<0) {
+				  l=0;
+			  }else if(l>oParent.offsetWidth-oDiv.offsetWidth){
+				  l=oParent.offsetWidth-oDiv.offsetWidth;
+			  }
+			  oDiv.style.left=l+"px";
+			  /*
+			  * l:0-580
+			  * l/580:0-1
+			  */
+			  var scale=l/(oParent.offsetWidth-oDiv.offsetWidth);
+			  document.title=scale;
+			 //!!!
+			 oDiv3.style.top=-scale*(oDiv3.offsetHeight-oDiv2.offsetHeight)+"px";
+			  
+			}
+		  //鼠标移开
+		  document.onmouseup=function() {
+			 
+			  document.onmousemove=null;
+			  document.onmousedown=null;
+			
+		  }
+		return false;
+	  }
+	  
+  }
+  </script>
+ </head>
+ <body>
+ <div id="parent">
+ <div id="div1"></div>
+ </div>
+ <div id="div2">
+	<div id="div3">
+	本篇讲解Ext另一个重要的概念：布局。一般的容器类控件都是通过配置项items添加子控件的，这些子控件相对于父控件怎么定位呢，这里就要用到布局。某些容器类控件，它本身默认就集成了一种布局方式，例如比较典型的是：Ext.container.Viewport 布局控件，它其实就是一个border布局的容器，还有Ext.form.Panel、Ext.tab.Panel等。本节我们系统的分析各种布局方式。
+	三、anchor
+
+这个布局就是表单面板默认支持的，每一项占据一行，支持用anchor配置项分配各个子项的高度和宽度。为百分比时表示当前大小占父容器的百分比，为数字的时一般为负数，表示父容器的值减去差值，剩下的为子项的大小。
+四、border
+
+这个布局可以定义东南西北四个方向的子元素，还有一个居中的子元素，一般用它来做页面整页布局，所以Ext.container.Viewport默认就支持了这个布局方式。
+	</div>
+ </div>
+ </body>
+
+</html>

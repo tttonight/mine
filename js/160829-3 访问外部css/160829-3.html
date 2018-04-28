@@ -1,0 +1,41 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> 变色,修改外部的css </title>
+  <!--注意：引入css文件-->
+  <link href="160829-3.css" rel="stylesheet" type="text/css"/>
+ <script>
+	
+	function color(eventObj) {
+		//获取css中所有的class选择器，0表示第1个css文件
+		// var ocssRules = document.styleSheets[0].rules;
+		
+		if(window.XMLHttpRequest) { //Mozilla,Safari,IE7,IE8
+		if(!window.ActiveXObject) { //Mozilla,Safari
+			var ocssRules = document.styleSheets[0].cssRules;//火狐
+		}else {
+			var ocssRules = document.styleSheets[0].rules;
+		}
+	}else {
+		var ocssRules = document.styleSheets[0].rules;
+	}
+	
+		//从ocssRules中取出你希望的class
+		var style1=ocssRules[0];
+		if(eventObj.value=="黑色") {
+			style1.style.background="black";
+		}else if(eventObj.value=="红色") {
+			style1.style.background="red";
+		}
+	}
+ </script>
+ </head>
+ <body>
+ <!--控制样式时，往往是用class来指定样式，用id来获取元素的标识-->
+ <div id="div1" class="style1"></div>
+ <!--通过传递this，表明点击的是哪个-->
+ <input type="button" value="黑色" onclick="color(this)">
+ <input type="button" value="红色" onclick="color(this)">
+ </body>
+</html>

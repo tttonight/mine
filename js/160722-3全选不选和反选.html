@@ -1,0 +1,65 @@
+<!--
+功能：全选不选反选
+描述：
+	全选：加上checked
+时间：16-7-22-11:34
+-->
+
+<html>
+<head>
+<title>全选不选反选</title>
+<script>
+window.onload = function ()
+{
+	var obtn1=document.getElementById("btn1");
+	var obtn2=document.getElementById("btn2");
+	var obtn3=document.getElementById("btn3");
+
+	var odiv = document.getElementById("div1");
+	var och = odiv.getElementsByTagName("input");
+	//全选
+	obtn1.onclick = function()
+	{
+		for(var i=0; i<och.length; i++) {
+			och[i].checked=true;
+		}	
+	};
+	//全不选
+	obtn2.onclick = function() {
+		for(var i=0; i<och.length; i++) {
+			och[i].checked=false;
+		}
+	}	
+	//反选
+	obtn3.onclick = function() {
+		for(var i=0; i<och.length; i++) {
+			if(och[i].checked == true) {
+				och[i].checked=false;
+			}else {
+				och[i].checked=true;
+			}
+		}
+	}
+};
+
+</script>
+</head>
+
+<body>
+<input id="btn1" type="button" value="全选" >
+<input id="btn2" type="button" value="全不选" >
+<input id="btn3" type="button" value="反选" ><br>
+
+<div id="div1"><!--上面的js要传送参数，如果只是input，也会包含button的input，所以最好加个id-->
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+</div>
+</body>
+</html>

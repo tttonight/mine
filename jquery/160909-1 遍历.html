@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>遍历</title>
+<!--对多选框进行操作，输出多选框的个数，并且将爱好的名称显示出来-->
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<style>
+</style>
+</head>
+<body>
+<input class="ball" type="checkbox" value="ball1">篮球
+<input class="ball" type="checkbox" value="ball2">排球
+<input class="ball" type="checkbox" value="ball3">足球
+<input class="ball" type="checkbox" value="ball4">乒乓球
+<input type="button" value="sum" id="btn">
+<script>
+$("#btn").click(function() {
+	$obj = $("input[type='checkbox']:checked");
+	window.alert($obj.length);
+	$.each($obj, function() {
+		alert($(this).val());
+	})
+});
+
+</script>
+</body>
+</html>

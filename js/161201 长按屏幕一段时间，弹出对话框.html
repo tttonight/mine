@@ -1,0 +1,54 @@
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> 长按屏幕一定时间，弹出对话框 </title>
+  <script src="../jquery/js/jquery-1.11.3.min.js"></script>
+  <style>
+  #div1 {width:800px; height:400px; background-color: #F8C3CD; margin:0 auto;margin-top:20px;}
+   #div2 {width:800px; height:400px; background-color: #FEDFE1; margin:0 auto;margin-top:20px;}
+   
+  </style>
+ <script>
+ 	$(document).ready(function() {
+ 		$("#div1").mousedown(function() {
+			start(this);
+		});
+		 $("#div1").mouseup(function() {
+			stop(this);
+		});
+		 //通过setTimeout技术时间
+		var start = function (dom)
+	    {
+	        dom.index = dom.index >= 0 ? dom.index + 1 : 0;
+	        console.log(dom.index);
+	        if (dom.index > 3)
+	        {
+	        	alert("弹出对话框/处理某函数");
+	            dom.index = 0;
+	            clearTimeout (dom.timer);
+	            return;
+	        }
+	        dom.timer = setTimeout (function ()
+	        {
+	            start (dom);
+	        }, 1000);
+	    }
+	     
+	    var stop = function (dom)
+	    {
+	        delete dom.index; 
+	        clearTimeout (dom.timer);
+	    }
+	 	});
+ </script>
+ </head>
+ <body >
+<input id="btn1" type="button" value="添加">
+<div id="div1">
+	
+</div>
+<div id="div2">
+</div>
+
+ </body>
+</html>

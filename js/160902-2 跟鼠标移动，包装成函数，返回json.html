@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> opener </title>
+  <style>
+   #div1 {width:200px;height:200px;background:#00CC00;position:absolute;}
+  </style>
+ <script>
+ /**封装成函数*/
+ function getPos(ev) {
+	var scrollTop = document.documentElement.scrollTop||document.body.scrollTop; 
+	var scrollLeft = document.documentElement.scrollLeft||document.body.scrollLeft; 
+	
+	//返回json格式
+	//*** 易错，是用逗号隔开的
+	return {x:ev.clientX+scrollLeft,y:ev.clientY+scrollTop}
+ }
+window.onload=function () {
+	var oDiv=document.getElementById("div1");
+	document.onmousemove = function(ev) {
+		
+		var oEvent=ev||event;
+		//调用getPos()
+		var pos=getPos(oEvent);
+		//如何调用json返回的值
+		oDiv.style.left= pos.x+"px";		
+		oDiv.style.top = pos.y+"px";
+	}
+}
+ </script>
+ </head>
+ <body style="height:2000px;">
+
+<div id="div1">
+</div>
+ </body>
+</html>

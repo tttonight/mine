@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>全选/全不选/反选</title>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<style>
+</style>
+</head>
+<body>
+<form >
+ <br><input type="checkbox" id="checkAll_2">全选/全不选<br/>
+ <input type="checkbox" name="items" value="zq"/>足球<br>
+ <input type="checkbox" name="items" value="lq"/>篮球<br>
+ <input type="checkbox" name="items" value="ppq"/>乒乓球<br>
+ <input type="checkbox" name="items" value="bq"/>棒球<br>
+ <input type="checkbox" name="items" value="ymq"/>羽毛球<br>
+ <input type="button" id="checkAll" value="全选"/>
+ <input type="button" id="checkNo" value="全不选"/>
+ <input type="button" id="checkRev" value="反选"/>
+</form>
+<script>
+/**
+注意：
+1、勾选复选框，怎样知道是否有选择，alert(this.checked);
+2、怎样增加属性checked,是checked="checked"
+3、反选：因为是集合，注意要先先进行遍历,然后怎样判断它的属性
+*/
+$(document).ready(
+	function() {
+		$("#checkAll_2").click(function() {
+			if(this.checked) {
+				$("input[name='items']").attr("checked","checked");
+			}else {
+				$("input[name='items']").attr("checked","");
+				//$("input[name='items']").removeAttr("checked")
+			}
+		});
+		
+		$("#checkAll").click(function() {
+			$("input[name='items']").attr("checked","checked");
+		});
+		$("#checkNo").click(function() {
+			$("input[name='items']").removeAttr("checked");
+		});
+		$("#checkRev").click(function() {
+			$.each($("input[name='items']"),function(){
+		// alert(this.checked);
+			//也可以用 this.checked判断
+			if($(this).attr("checked")){
+				//*** 注意：这个要用this才可以，用$("input[name='items']")错误
+				$(this).removeAttr("checked");
+			}else{
+				$(this).attr("checked","checked");
+			}
+				
+			});
+		});
+	
+	}
+); 
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> opener </title>
+  <!--实现子窗口和父窗口的通信,替换span中的消息-->
+ <script>
+ var newWindow;
+	function test1() {
+		//newWindow 其实就是指向新窗口引用
+		newWindow = window.open("160830-3-2.html");
+		
+	}
+	/**
+	* 父窗口 到 子窗口
+	*/
+	function test2() {
+		//一直用 document.getElementById 麻烦，可以写一个函数
+		/**
+		*  function $ (id) {
+		*	return document.getElementById(id);
+		*	}
+		*	后面的获取就直接用 $(info2) 即可
+		*/
+		var val2 = document.getElementById("info2").value
+		
+		//window.alert(val2);
+		
+		newWindow.document.getElementById("info").value=val2;
+		
+	}
+ </script>
+ </head>
+ <body >
+ 窗口1<br>
+<input type="button" value="打开一个新窗口" onclick="test1()">
+<span id="myspan">消息</span><br>
+消息:<input type="text" id="info2"/><br>
+<input type="button" value="通知给子窗口" onclick="test2()">
+ </body>
+</html>

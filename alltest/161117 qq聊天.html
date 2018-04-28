@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display Webcam Stream</title>
+<script src="../jquery/js/jquery-1.11.3.min.js"></script>  
+<style>
+#chatBox{width:400px;border:1px solid #d3d3d3;margin:50px auto;} 
+#chat {max-height:220px;overflow-y:auto;max-width:400px;} 
+#chat > ul > li{padding:3px;clear:both;padding:4px;margin:10px 0px 5px 0px;overflow:auto} 
+#chatMessages{list-style:none} 
+#chatMessages > li > img{width:35px;float:left} 
+#chatMessages > li > span{width:300px;float:left;margin-left:5px} 
+#chatData{padding:5px;margin:5px;border-radius:5px;border:1px solid #999;width:300px} 
+#trig {border: 1px solid #390; color:#fff; background: #360;-webkit-border-radius: 3px; 
+-moz-border-radius:3px;padding:5px 8px; cursor:pointer} 
+</style>
+</head>
+  
+<body>
+<div id="chatBox"> 
+    <div id="chat"> 
+        <ul id="chatMessages"> 
+            <li> 
+                <img src="../images/1.jpeg"/><span>Hello Friends</span> 
+            </li> 
+            <li> 
+                <img src="../images/2.jpg"/><span>你好，朋友！Helloweba.com欢迎你.</span> 
+            </li> 
+        </ul> 
+    </div> 
+    <input type="text" id="chatData" placeholder="Message" /> 
+    <input type="button" value=" 发送 " id="trig" /> 
+
+    <script>
+        $(function(){  
+            $("#chatData").focus();//输入框获得焦点 
+            $('<audio id="chatAudio"><source src="../images/1.mp3" type="audio/mpeg"></audio>').appendTo('body');//载入声音文件 
+         
+            $("#trig").click(function(){ 
+                var a = $("#chatData").val().trim();//获取输入的内容 ,trim() 去掉首尾的空字符串
+                if(a.length > 0){ 
+                    $("#chatData").val(''); //清空输入框 
+                    $("#chatData").focus(); //获得焦点 
+                    $("<li></li>").html('<img src="../images/3.jpeg"/><span>'+a+'</span>') 
+                    .appendTo("#chatMessages");//将输入的内容追加的聊天区 
+                    $("#chat").animate({"scrollTop": $('#chat')[0].scrollHeight}, "slow");//调整滚动条 
+                    $('#chatAudio')[0].play(); //播放声音 
+                } 
+            }); 
+        }); 
+    </script>
+</body>
+</html>

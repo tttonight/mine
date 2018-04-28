@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+ <head>
+  <title>选项卡</title>
+  <style>
+	#div1 .active{background:yellow;}
+	#div1 div {width:100px;height:200px;background:#CCC;border:1px solid #999;display:none;}
+  </style>
+
+  <script>
+	window.onload=function () {
+		var odiv=document.getElementById("div1");
+		var obtn=odiv.getElementsByTagName("input");
+		var obl=odiv.getElementsByTagName("div");
+		
+		for(var i=0; i<obtn.length; i++) {
+
+			//将所有的按钮给一个index=i
+			obtn[i].index=i;
+			obtn[i].onclick=function () {
+			//先让所有的黄色和下面灰色消失
+			for(var i=0; i<obtn.length; i++) {
+				obtn[i].className="";
+				obl[i].style.display="none";
+			}
+			//上面按钮变黄色
+			this.className="active";//this表示当前发生事件的元素，上面那个没有事件，所已不用this
+			//
+			//alert(this.index);
+			obl[this.index].style.display="block";
+			};
+		}
+		
+	};
+  </script>
+ </head>
+ <body>
+ <div id="div1">
+  <input class="active" type="button" value="11"/>
+  <input type="button" value="22"/>
+  <input type="button" value="33"/>
+  <input type="button" value="44"/>
+  <div style="display:block">111111111</div>
+  <div>222222222</div>
+  <div>33333333</div>
+  <div>4444444444</div>
+ </div>
+ </body>
+</html>

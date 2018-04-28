@@ -1,0 +1,34 @@
+* {margin:0; padding:0;}
+body {font-family: "Helvetica","Arial",sans-serif;font-size:16px;}
+#wrap {
+	width:400px;
+	margin:20px auto;
+	background-color:#eee;
+	padding:20px;
+	border-radius:10px;
+}
+#wrap dt {
+	border:1px solid #FFF;
+	background-color:#F4A7B9;
+	line-height:30px;
+	padding-left:6px;
+	color:#FFF;
+	cursor:pointer;
+}
+#wrap dd {
+	border:1px solid #FFF;
+	background-color:#78C2C4;
+	font-size:14px;
+	line-height:28px;
+	padding-left:20px;
+	display:none;
+}
+
+#wrap .current {
+	background-color:#33A6B8;
+}
+
+#wrap dd a {
+	text-decoration:none;
+	color:#FFF;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<style>
+
+</style>
+</head>
+
+<body>
+<input id="b1" type="button" value="使单选下拉框的2号被选中">
+<input id="b2" type="button" value="使多选下拉框的2号和5号被选中">
+<input id="b3" type="button" value="使复选框的复选2和复选4被选中">
+<input id="b4" type="button" value="使单选框的单选2被选中">
+<input id="b5" type="button" value="打印已经被选中的值">
+
+<form>
+<select id="one">
+ <option name="items" value="1">1</option>
+ <option name="items" value="2">2</option>
+ <option name="items" value="3">3</option>
+ <option name="items" value="4">4</option>
+ <option name="items" value="5">5</option>
+ <option name="items" value="6">6</option>
+</select><br>
+<select id="two" size=7 multiple="multiple">
+ <option name="items" value="1">1</option>
+ <option name="items" value="2">2</option>
+ <option name="items" value="3">3</option>
+ <option name="items" value="4">4</option>
+ <option name="items" value="5">5</option>
+ <option name="items" value="6">6</option>
+</select><br>
+</form>
+<script>
+$(document).ready(function() {
+	$("#b1").click(function() {
+		$("#one").val("2");
+	});
+	
+	$("#b2").click(function() {
+		//多选框，要注意加上 multiple="multiple"
+		$("#two").val(["2","5"]);
+	});
+	
+	$("#b5").click(function() {
+		$.each($("form :selected"),function(){
+			console.log($(this).val());
+		})
+	});
+});
+</script>
+</body>
+</html>

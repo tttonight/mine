@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> opener </title>
+  <!--
+  *** 错误：1、不动：原因 ① 不是绝对定位：position:absolute
+  *** 		2、document.body.clientHeight获取的高一直为 19，
+				原因：document.body.clientHeight获取的是行高，应该用document.documentElement.clientHeight可见区域高度
+  -->
+ <script>
+ /**
+ * 1、先定两个方向（x轴和y轴的方向）---全局变量
+ * 2、定义开始坐标(X,Y)---全局变量
+ * 3、函数：一旦移动，x，y都要加1
+ * 4、修改div的lef和top
+ * 5、判断什么时候转变方向：
+ */
+	/* 自己写
+	function startMove() {
+		var oDiv=document.getElementById("sun");	
+		oDiv.style.left=oDiv.offsetLeft+10+"px";
+		
+	}
+	setInterval("startMove()",30);*/
+	var directX=1; //x轴方向
+	var directY=1; //y轴方向
+	var sunX=0; //坐标(X,Y)
+	var sunY=0; //
+	function startMove() {
+		var sundiv = document.getElementById("sun");
+		//var myspan = document.getElementById("myspan");
+		
+		
+		sunX += directX;
+		sunY += directY;
+		// 4
+		sundiv.style.left = sunX + "px";
+		sundiv.style.top = sunY+"px";
+		
+		//判断是否撞到墙壁
+		//sunX+sundiv.offsetWidth ===>图片左边距离+宽度
+		//sunX<=0 ===>图片往左走，说明其速度是-的，所以要取正
+		if(sunX+sundiv.offsetWidth>=document.body.clientWidth || sunX<=0) {
+			directX = -directX;
+		}
+		if(sunY+sundiv.offsetHeight>=document.documentElement.clientHeight || sunY<=0) {
+			directY = -directY;
+		}
+		//myspan.innerText=document.body.clientHeight ;
+	}
+	setInterval("startMove()",10);
+ </script>
+ </head>
+ <body >
+ <span id="myspan"></span>
+ <div id="sun" style="position:absolute">
+ <img style="width:50px" src="./1.jpg">
+ </div>
+ </body>
+</html>

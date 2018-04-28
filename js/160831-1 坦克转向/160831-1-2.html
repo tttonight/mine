@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> 坦克转向 </title>
+  <!--重点在于背景样式-->
+ 
+ </head>
+ <body onkeydown="dosomething(event)">
+ <!--
+ 问题：1、怎样通过键盘输入：用onkeydown
+			但是如果是在body中写onkeydown="hero.move(event)",这样的话会出现问题：
+		如果接下来要写发子弹，则不能了，因为它已经固定了方法move
+			所以可以写"dosomething(event)"---然后在上面写一个函数，判断用户希望干什么
+			if(){hero.move(event);}……
+ 
+ -->
+ <div id="filed" style="background:black; width:400px; height:400px;position:absolute;">
+ <div id="tank" style="background-image:url('itank.jpg');
+ width:40px;height:40px;position:absolute;"></div>
+ </div>
+ </body>
+ <script>
+	/**
+	* 用面向对象开发，（可以通过asdw键来控制坦克的走向）
+	*/
+	var oTank = document.getElementById("tank");
+	function MyTank(x,y,direct) {
+		this.x=x;//横坐标
+		this.y=y;
+		this.direct=direct;//方向
+		this.speed=4;//速度
+		//赋初值
+		oTank.style.left=this.x+"px";
+		oTank.style.top=this.y+"px";
+		oTank.style.backgroundPosition="0px 0px";
+		/**
+		* 坦克的移动
+		* 注意：1、因为是通过键盘来控制的，这是事件，所以需要通过传入一个event参数来控制事件
+		*			event本身会带个keycode过来，看ACSII表（默认是大写）
+		*/
+		this.move = function move(event) {
+			
+			switch(event.keyCode) {
+				case 65:
+				{
+					//a ==>左==>3
+					this.x-=this.speed;
+					//改方向，为了后面的子弹
+					oTank.style.backgroundPosition="0px 40px";
+					this.direct=3;
+					break;
+				}
+				case 83:
+				{
+					//s ==>下==>2
+					this.y+=this.speed;
+					oTank.style.backgroundPosition="0px 80px";
+					this.direct=2;
+					break;
+				}
+				case 87:
+				{
+					//w ==>上==>0
+					this.y-=this.speed;
+					oTank.style.backgroundPosition="0px 0px";
+					this.direct=0;
+					break;
+				}
+				case 68:
+				{
+					//d ==>右==>1
+					this.x+=this.speed;
+					oTank.style.backgroundPosition="0px -40px";
+					this.direct=1;
+					break;
+				}
+				
+			}
+			//统一改变
+			oTank.style.left=this.x+"px";
+			oTank.style.top=this.y+"px";
+		}
+	}
+		
+	//判断用户的操作
+	function dosomething(event){
+		if(event.keyCode==65||event.keyCode==83||event.keyCode==68||event.keyCode==87){
+			hero.move(event);
+		}
+	}
+	//创建坦克
+	var hero=new MyTank(180,360,0);
+	
+ </script>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTPYE HTML>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Timer</title>
+        <style>
+        .timer { padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <div class="timer">
+            无操作秒数：
+            <span class="number"></span>
+        </div>
+        
+        <script>
+        
+        // output result
+        function output()
+        {
+            var timer = document.getElementsByClassName('timer')[0];
+            timer.getElementsByClassName('number')[0].innerHTML = no_operation_second;
+        }
+        
+        no_operation_second = 0;
+        no_operation_timer = window.setInterval(function(){
+            
+            no_operation_second++;
+            
+            // output result
+            output();
+            
+            if (no_operation_second > 10)
+            {
+                // one minute to do
+				//window.location.href="http:baidu.com";
+            }
+            
+        }, 1000);
+        
+        // click to reset no_operation_second
+        document.onclick = (function(){
+            no_operation_second = 0;
+            output();
+        });
+        </script>
+        
+    </body>
+</html>
+

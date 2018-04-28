@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>多个div变宽</title>
+<style>
+div {width:100px; height:50px; background:red; margin:10px;}
+</style>
+<script>
+window.onload = function() {
+	var oDiv = document.getElementsByTagName('div');
+	for(var i=0; i<oDiv.length; i++) {
+		//一个div对应一个timer，这样才不会离开一个div到另一个div时，第一个div停止
+		//定时器，而不动
+		oDiv[i].timer=null;
+		//*** oDiv 为多个数，后面一定要跟个i，然后函数里面要用到它，用 this
+		oDiv[i].onmouseover = function() {
+			startMove(this, 400);
+		};
+		oDiv[i].onmouseout = function() {
+			startMove(this,100);
+		};
+	}
+};
+var timer=null;
+function startMove(obj, iTarget) {
+	
+	 clearInterval(obj.timer);
+	obj.timer = setInterval(function() {
+		var speed=(iTarget-obj.offsetWidth)/10;
+		//### 重要：速度不为小数，使其到400
+		speed=speed>0?Math.ceil(speed):Math.floor(speed);
+		if(obj.offsetWidth==iTarget)
+		{
+			clearInterval(timer);
+		}
+		else
+		{
+			obj.style.width=obj.offsetWidth+speed+'px';
+		}
+	},30);
+};
+</script>
+</head>
+
+<body>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>

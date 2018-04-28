@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> 超级玛丽 </title>
+  <!--
+  bug: 1、过界没处理；2、不能通过键盘；3、mario才蘑菇
+  -->
+  <style>
+  #div1 {width:400px; height:200px; background:pink; position:absolute;}
+  </style>
+ <script>
+	/**
+	* 功能：移动
+	*/
+	
+	//设计Mario类
+	function Mario() {
+		this.x=0;
+		this.y=0;
+		
+		this.move = function(dir) {
+			switch(dir) {
+				case 0:
+				{
+					var img = document.getElementById("img1");
+					var top=img.style.top;
+					var top=parseInt(top.substr(0,top.length-2));
+					img.style.top=top-10+"px";
+					break;
+				}
+				case 1://向下
+				{
+					
+					// *** 错误：不能将这句写在外面，？
+					var img = document.getElementById("img1");
+					
+					// 因为img.style.left有带px，所以需要去掉，用substr，并且需将其转化为数字类型
+					// *** 错误：如果img中的style没有top，则会报错
+					var top=img.style.top;
+					var top=parseInt(top.substr(0,top.length-2));
+					
+					img.style.top=top+10+"px";
+					// alert(img.style.left);
+					
+					
+					break;
+				}
+					
+				case 2:
+				{
+					
+					var img = document.getElementById("img1");
+					var left=img.style.left;
+					var left=parseInt(left.substr(0,left.length-2));
+					img.style.left=left-10+"px";
+					break;
+				}
+				case 3:
+				{
+					var img = document.getElementById("img1");
+					var left=img.style.left;
+					var left=parseInt(left.substr(0,left.length-2));
+					img.style.left=left+10+"px";
+					break;
+				}
+			}
+		}
+	}
+	
+	var m = new Mario();
+	function marioMove(dir) {
+		m.move(dir);
+	}
+	
+ </script>
+ </head>
+ <body>
+ <div>
+ <input type="button" value="up" onclick="marioMove(0)">
+ <input type="button" value="down" onclick="marioMove(1)">
+ <input type="button" value="right" onclick="marioMove(2)">
+ <input type="button" value="left" onclick="marioMove(3)">
+ </div>
+ <div id="div1">
+ <img id="img1" style="width:50px;position:absolute;top:0px;left:0px;" src="2.jpeg">
+ </div>
+ 
+ </body>
+</html>

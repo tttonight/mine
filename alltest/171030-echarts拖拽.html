@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title> echarts拖拽 </title>
+  <script src="../jquery/js/jquery-1.11.3.min.js"></script>
+  <script src='../include/echarts.common.min.js'></script>
+	<style>
+	#div1 {
+		width:400px;
+		height:400px;
+	}
+	</style>
+
+</head>
+<body>
+<div id='div1'></div>
+<script>
+var symbolSize = 20;
+var data = [
+    ['一月', 5],
+    ['二月', 10],
+    ['三月', 15],
+    ['一月', 7],
+    ['二月', 12],
+    ['三月', 2]
+];
+var data1;
+var content = document.getElementById("div1");
+var myChart = echarts.init(content);
+option = {
+    title: {
+        text: 'Support only vertical drag'
+    },
+    tooltip: {
+        triggerOn: 'none',
+        formatter: function(params) {
+            return 'X: ' + params.name + '<br>Y: ' + params.data.toFixed(2);
+        }
+    },
+    grid: {},
+    xAxis: {
+        type: 'category',
+        data: ['一月', '二月', '三月']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        id: 'a',
+        type: 'line',
+        smooth: true,
+        symbolSize: symbolSize,
+        data: [5, 10, 15],
+        label: {
+            normal: {
+                show: true,
+                position: 'right',
+                formatter: function(params) {
+                    return params.data.toFixed(2);
+                }
+            }
+        }
+    }, {
+        id: 'b',
+        type: 'line',
+        smooth: true,
+        symbolSize: symbolSize,
+        data: [7, 12, 2],
+        label: {
+            normal: {
+                show: true,
+                position: 'right',
+                formatter: function(params) {
+                    return params.data.toFixed(2);
+                }
+            }
+        }
+    }]
+};
+myChart.setOption(option);
+
+// if (!app.inNode) {
+    setTimeout(function() {
+        // Add shadow circles (which is not visible) to enable drag.
+        //用setOption来删除或更换已有的图形元素,一般有id和$action,如果没有可以不写，$actiion不写表示默认merge：如果已有元素，则新的配置项和已有的设定进行merge，没有则新建
+        myChart.setOption({ 
+            graphic: echarts.util.map(data, function(item, dataIndex) { //graphic是原生图形元素组件
+                return {
+                    type: 'circle',
+                    position: myChart.convertToPixel('grid', item),//平移[x,y]
+                    shape: { //定位、形状相关的设置
+                        cx: 0,
+                        cy: 0,
+                        r: symbolSize / 2
+                    },
+                    invisible: true,//表示节点显示
+                    draggable: true,//是否可以被拖拽
+                    ondrag: echarts.util.curry(onPointDragging, dataIndex),
+                    onmousemove: echarts.util.curry(showTooltip, dataIndex),
+                    onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+                    z: 100
+                };
+            })
+        });
+    }, 0);
+
+    window.addEventListener('resize', updatePosition);
+// }
+
+
+function updatePosition() {
+    myChart.setOption({
+        graphic: echarts.util.map(data, function(item, dataIndex) {
+            return {
+                position: myChart.convertToPixel('grid', item)
+            };
+        })
+    });
+}
+
+function showTooltip(dataIndex) {
+    myChart.dispatchAction({ //触发图表行为
+        type: 'showTip',//显示提示框
+        seriesIndex: 0,
+        dataIndex: dataIndex
+    });
+}
+
+function hideTooltip(dataIndex) {
+    myChart.dispatchAction({
+        type: 'hideTip'
+    });
+}
+
+function onPointDragging(dataIndex, dx, dy) {
+    data[dataIndex][1] = myChart.convertFromPixel('grid', this.position)[1];
+
+    var temp = [
+        [],
+        []
+    ];
+    for (var i = 0; i < 3; i++) {
+        temp[0].push(data[i][1]);
+    }
+    for (var i = 3; i < 6; i++) {
+        temp[1].push(data[i][1]);
+    }
+
+    // Update data
+    myChart.setOption({
+        series: [{
+            id: 'a',
+            data: temp[0]
+        }, {
+            id: 'b',
+            data: temp[1]
+        }]
+    });
+    updatePosition();
+}
+</script>
+</body>
+</html>
+

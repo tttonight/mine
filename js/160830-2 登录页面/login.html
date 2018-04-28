@@ -1,0 +1,29 @@
+<head>
+ <meta charset="utf-8">
+  <title> 登录 </title>
+<script>
+/**
+* 难点：1、form中的action="ok.html"，一点击就会跳转到ok.html
+* 			解决：函数中return 真假，再onclick中return
+*/
+function checkuser() {
+	if($("uname").value=="lll" && $("pwd").value=="123") {
+		return true;
+		
+	}else {
+		//登录不成功清空
+		$("uname").value="";
+		$("pwd").value="";
+		return false;		
+	}
+}
+function $(id) {
+	return document.getElementById(id);
+}
+</script>
+</head>
+<form action="ok.html">
+user:<input type="text" id="uname"/><br>
+password:<input type="password" id="pwd"/><br>
+<input type="submit" value="登录" onclick="return checkuser()"/>
+</form>

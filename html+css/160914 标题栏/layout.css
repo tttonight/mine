@@ -1,0 +1,35 @@
+body {
+	margin:0px;
+	padding:0px;
+	background:#131313;
+}
+
+#menu ul.ul1 {
+	width:699px;
+	margin:50px auto;
+	font:14px Trebuchet MS,宋体;
+	color:black;
+}
+#menu .ul1 li {
+	width:114px;
+	line-height:32px;
+	text-align:center;
+	float:left;
+	background-image:url(./img/1.jpg);
+	list-style:none;
+}
+#menu li.tiao {	
+	width:3px;
+	height:32px;
+	background-image:url(./img/2.jpg);
+	border-left:0;
+}
+
+#menu li.change {
+	width:114px;
+	line-height:32px;
+	text-align:center;
+	float:left;
+	background-image:url(./img/3.jpg);
+	list-style:none;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>codewars练习</title>
+<!--
+题目：在排队的队伍中，每个人只有一张 25,5,100的钱，一张票25元
+一个职员在一开始没钱的时候买票，严格一个人一个人来买票，整个队伍都可以找到零钱的返回 YES
+否则返回 NO
+例如：[25,25,50,50] --- YES
+[25,100] --- NO
+-->
+<!--
+自己的做法：定义3个数组分别存放25,50,100的钱，循环判断people[0]的值
+如果是25，删除people[0]的值，再加入到25的数组中
+如果是50，判断是否25的数组有25,再处理，依次处理100(25*3/25+50)
+优化：用对象，如下
+-->
+</head>
+<body>
+<script type="text/javascript">
+function Clerk(name) {
+  this.name = name;
+  
+  this.money = {
+    25 : 0,
+    50 : 0,
+    100: 0 
+  };
+  
+  this.sell = function(element, index, array) {
+    this.money[element]++;
+
+    switch (element) {
+      case 25:
+        return true;//? 相当于 this.money[25]++;
+      case 50:
+        this.money[25]--;
+        break;
+      case 100:
+        this.money[50] ? this.money[50]-- : this.money[25] -= 2;
+        this.money[25]--;
+        break;
+    }
+    return this.money[25] >= 0;
+  };
+}
+
+function tickets(peopleInLine){
+  var vasya = new Clerk("Vasya");
+   //数组的处理方法：every()---所有数组元素处理后全部 return true，那么就 return true，有点像 &&。
+  return peopleInLine.every(vasya.sell.bind(vasya)) ? "YES" : "NO";
+}
+var a=[25,25,25,50,100,100];
+console.log(tickets(a));
+</script>
+</body>
+</html>

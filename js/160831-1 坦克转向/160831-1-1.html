@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+ <meta charset="utf-8">
+  <title> 坦克转向 </title>
+  <!--重点在于背景样式-->
+ <script>
+	//*** 错误：语法错误，在使用background-position是错误，因为-禁用，应该为驼峰式
+	function change(obj) {
+		var tank=document.getElementById("tank");
+		if(obj.value=="上") {
+			tank.style.backgroundPosition="0px 0px";
+		}else if(obj.value=="下") {
+			tank.style.backgroundPosition="0px 80px";
+		}else if(obj.value=="左") {
+			tank.style.backgroundPosition="0px 40px";
+		}else if(obj.value=="右") {
+			tank.style.backgroundPosition="0px -40px";
+		}
+	}
+	
+	function test2() {
+	}
+ </script>
+ </head>
+ <body >
+ <!--通过id来实现坦克,
+ 其中：background-position-y:40px 代表从y轴哪个位置开始显示，0是第一个，40是第4个，-40或120是第2个
+ 所以：我们可以通过改变它来实现转向
+ 但是：因为火狐不兼容他，所以可以改为background-position:x y; 来实现-->
+ <div id="tank" style="background-position:0px 40px; background-image:url('itank.jpg');width:40px;height:40px"></div>
+<input type="button" value="上" onclick="change(this)">
+<input type="button" value="下" onclick="change(this)">
+<input type="button" value="左" onclick="change(this)">
+<input type="button" value="右" onclick="change(this)">
+ </body>
+</html>
