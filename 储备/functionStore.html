@@ -1,135 +1,231 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>一些方法</title>
-<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-<style>
 
-</style>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>一些方法</title>
+    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+    <style>
+    </style>
 </head>
 
 <body>
-	<ul>
-		<li>parseQueryString() --- 解析url，返回指定参数</li>
+    <ul>
+        <li>parseQueryString() --- 解析url，返回指定参数</li>
         <li>objKeySort() --- 对对象的key进行排序</li>
-	</ul>
+    </ul>
     <ul>
         <li>*************时间问题**************</li>
         <li>getDateWeek() --- 得到某一天在一年中是第几周</li>
         <li>GetDateDiff() --- 求两个时间的时间差</li>
     </ul>
-<script>
-$(document).ready(function() {
 
-});
+    <ul>
+        <li>*************数据**************</li>
+        <li>deepClone() --- 深克隆</li>
+        <li>accAdd() --- 加法精度问题</li>
+        <li>accSub() --- 减法精度问题</li>
+    </ul>
+    <script>
+        $(document).ready(function () {
 
-/**
-* name: parseQueryString
-* function: 解析url，返回指定参数
-* useMethod: parseQueryString(window.location.href).xxx
-*/
-//解析URL后面的参数，将参数返回成一个JSON对像，如果不是URL而是形如&name=1234&age=2345格式的字段串
-//也适用于这个方法，前面的&加不加也都支持
-function parseQueryString(url) {
-    if (url == "" || url == undefined) return {};
+        });
 
-    var obj = {};
-    var keyvalue = [];
-    var keystr = "",
-        valuestr = "";
+        /**
+        * name: parseQueryString
+        * function: 解析url，返回指定参数
+        * useMethod: parseQueryString(window.location.href).xxx
+        */
+        //解析URL后面的参数，将参数返回成一个JSON对像，如果不是URL而是形如&name=1234&age=2345格式的字段串
+        //也适用于这个方法，前面的&加不加也都支持
+        function parseQueryString(url) {
+            if (url == "" || url == undefined) return {};
 
-    var paraString = url;
-    if (url.lastIndexOf("?") != -1) {
-        paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
-    } else {
-        paraString = url.split("&");
-    }
+            var obj = {};
+            var keyvalue = [];
+            var keystr = "",
+                valuestr = "";
 
-    for (var i =0;i< paraString.length;i++) {
-    	if(paraString[i] == "") continue;
-        keyvalue = paraString[i].split("=");
-        
-        keystr = keyvalue[0];
-        valuestr = keyvalue[1];
-        var isExist = keystr in obj;
-        if(isExist){//解决多选下拉框时，只会传最后一个值到后台的问题，多选下拉框时将值用,分割
-        	valuestr = obj[keystr]+','+valuestr
+            var paraString = url;
+            if (url.lastIndexOf("?") != -1) {
+                paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+            } else {
+                paraString = url.split("&");
+            }
+
+            for (var i = 0; i < paraString.length; i++) {
+                if (paraString[i] == "") continue;
+                keyvalue = paraString[i].split("=");
+
+                keystr = keyvalue[0];
+                valuestr = keyvalue[1];
+                var isExist = keystr in obj;
+                if (isExist) {//解决多选下拉框时，只会传最后一个值到后台的问题，多选下拉框时将值用,分割
+                    valuestr = obj[keystr] + ',' + valuestr
+                }
+                obj[keystr] = valuestr;
+
+            }
+            return obj;
         }
-        obj[keystr] = valuestr;
-        
-    }
-    return obj;
-}
 
-/*
-* time: 2017-09-13
-* name: objKeySort
-* function: 对对象的key进行排序
-* example: obj = {'name':'ljw', 'age':13}
-*/
-function objKeySort(obj) {//排序的函数
-    var newkey = Object.keys(obj).sort();
-　　//先用Object内置类的keys方法获取要排序对象的属性名，再利用Array原型上的sort方法对获取的属性名进行排序，newkey是一个数组
-    var newObj = {};//创建一个新的对象，用于存放排好序的键值对
-    for (var i = 0; i < newkey.length; i++) {//遍历newkey数组
-        newObj[newkey[i]] = obj[newkey[i]];//向新创建的对象中按照排好的顺序依次增加键值对
-    }
-    return newObj;//返回排好序的新对象
-}
+        /*
+        * time: 2017-09-13
+        * name: objKeySort
+        * function: 对对象的key进行排序
+        * example: obj = {'name':'ljw', 'age':13}
+        */
+        function objKeySort(obj) {//排序的函数
+            var newkey = Object.keys(obj).sort();
+            //先用Object内置类的keys方法获取要排序对象的属性名，再利用Array原型上的sort方法对获取的属性名进行排序，newkey是一个数组
+            var newObj = {};//创建一个新的对象，用于存放排好序的键值对
+            for (var i = 0; i < newkey.length; i++) {//遍历newkey数组
+                newObj[newkey[i]] = obj[newkey[i]];//向新创建的对象中按照排好的顺序依次增加键值对
+            }
+            return newObj;//返回排好序的新对象
+        }
 
-/*时间问题*/
-/*
-* time: 2017-09-11
-* name: getDateWeek
-* function: 得到某一天在一年中是第几周
-* useMethod: date为时间:2017-09-11
-*/
-function getDateWeek(date) {
-    date = date.split("-");//或者用getFullYear()等方法
-    var year = date[0];
-    var month = date[1];
-    var weekday = date[2];
-    var date1 = new Date(year,parseInt(month)-1, weekday),
-        date2 = new Date(year, 0, 1);
-    d = Math.round((date1.valueOf() - date2.valueOf()) / 86400000);//round表示四舍五入保留n位小数,valueOf可以将date转为时间戳
-    return Math.ceil((d + ((date2.getDay() + 1) - 1)) / 7);
-}
+        /*时间问题*/
+        /*
+        * time: 2017-09-11
+        * name: getDateWeek
+        * function: 得到某一天在一年中是第几周
+        * useMethod: date为时间:2017-09-11
+        */
+        function getDateWeek(date) {
+            date = date.split("-");//或者用getFullYear()等方法
+            var year = date[0];
+            var month = date[1];
+            var weekday = date[2];
+            var date1 = new Date(year, parseInt(month) - 1, weekday),
+                date2 = new Date(year, 0, 1);
+            d = Math.round((date1.valueOf() - date2.valueOf()) / 86400000);//round表示四舍五入保留n位小数,valueOf可以将date转为时间戳
+            return Math.ceil((d + ((date2.getDay() + 1) - 1)) / 7);
+        }
 
-/*
-* time: 2018-04-17
-* name: GetDateDiff
-* function: 求两个时间的时间差
-* useMethod: date为时间:2017-09-11 12:12:12
-*/
-function GetDateDiff(startTime, endTime, diffType) {
-    //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式 
-    startTime = startTime.replace(/\-/g, "/");
-    endTime = endTime.replace(/\-/g, "/");
-    //将计算间隔类性字符转换为小写
-    diffType = diffType.toLowerCase();
-    var sTime =new Date(startTime); //开始时间
-    var eTime =new Date(endTime); //结束时间
-    //作为除数的数字
-    var timeType =1;
-    switch (diffType) {
-        case"second":
-            timeType =1000;
-        break;
-        case"minute":
-            timeType =1000*60;
-        break;
-        case"hour":
-            timeType =1000*3600;
-        break;
-        case"day":
-            timeType =1000*3600*24;
-        break;
-        default:
-        break;
-    }
-    return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(timeType));
-}
-</script>
+        /*
+        * time: 2018-04-17
+        * name: GetDateDiff
+        * function: 求两个时间的时间差
+        * useMethod: date为时间:2017-09-11 12:12:12
+        */
+        function GetDateDiff(startTime, endTime, diffType) {
+            //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式 
+            startTime = startTime.replace(/\-/g, "/");
+            endTime = endTime.replace(/\-/g, "/");
+            //将计算间隔类性字符转换为小写
+            diffType = diffType.toLowerCase();
+            var sTime = new Date(startTime); //开始时间
+            var eTime = new Date(endTime); //结束时间
+            //作为除数的数字
+            var timeType = 1;
+            switch (diffType) {
+                case "second":
+                    timeType = 1000;
+                    break;
+                case "minute":
+                    timeType = 1000 * 60;
+                    break;
+                case "hour":
+                    timeType = 1000 * 3600;
+                    break;
+                case "day":
+                    timeType = 1000 * 3600 * 24;
+                    break;
+                default:
+                    break;
+            }
+            return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(timeType));
+        }
+
+        /*
+        * time: 2018-07-11
+        * name: deepClone
+        * function: 深克隆
+        * useMethod: source
+        */
+        function deepClone(source) {
+            let sourceCopy = source instanceof Array ? [] : {};
+            for (let item in source) {
+                //这里通过递归
+                sourceCopy[item] = typeof source[item] === 'object' ? deepClone(source[item]) : source[item];
+            }
+            return sourceCopy;
+        }
+
+        /**
+        ** 加法函数，用来得到精确的加法结果
+        ** 说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。
+        ** 调用：accAdd(arg1,arg2)
+        ** 返回值：arg1加上arg2的精确结果
+        **/
+        function accAdd(arg1, arg2) {
+            var r1, r2, m, c;
+            try {
+                r1 = arg1.toString().split(".")[1].length;
+            }
+            catch (e) {
+                r1 = 0;
+            }
+            try {
+                r2 = arg2.toString().split(".")[1].length;
+            }
+            catch (e) {
+                r2 = 0;
+            }
+            c = Math.abs(r1 - r2);
+            m = Math.pow(10, Math.max(r1, r2));
+            if (c > 0) {
+                var cm = Math.pow(10, c);
+                if (r1 > r2) {
+                    arg1 = Number(arg1.toString().replace(".", ""));
+                    arg2 = Number(arg2.toString().replace(".", "")) * cm;
+                } else {
+                    arg1 = Number(arg1.toString().replace(".", "")) * cm;
+                    arg2 = Number(arg2.toString().replace(".", ""));
+                }
+            } else {
+                arg1 = Number(arg1.toString().replace(".", ""));
+                arg2 = Number(arg2.toString().replace(".", ""));
+            }
+            return (arg1 + arg2) / m;
+        }
+
+        //给Number类型增加一个add方法，调用起来更加方便。
+        Number.prototype.add = function (arg) {
+            return accAdd(arg, this);
+        };
+
+        /**
+        ** 减法函数，用来得到精确的减法结果
+        ** 说明：javascript的减法结果会有误差，在两个浮点数相减的时候会比较明显。这个函数返回较为精确的减法结果。
+        ** 调用：accSub(arg1,arg2)
+        ** 返回值：arg1加上arg2的精确结果
+        **/
+        function accSub(arg1, arg2) {
+            var r1, r2, m, n;
+            try {
+                r1 = arg1.toString().split(".")[1].length;
+            }
+            catch (e) {
+                r1 = 0;
+            }
+            try {
+                r2 = arg2.toString().split(".")[1].length;
+            }
+            catch (e) {
+                r2 = 0;
+            }
+            m = Math.pow(10, Math.max(r1, r2)); //last modify by deeka //动态控制精度长度
+            n = (r1 >= r2) ? r1 : r2;
+            return ((arg1 * m - arg2 * m) / m).toFixed(n);
+        }
+
+        // 给Number类型增加一个mul方法，调用起来更加方便。
+        Number.prototype.sub = function (arg) {
+            return accMul(arg, this);
+        };
+    </script>
 </body>
+
 </html>
